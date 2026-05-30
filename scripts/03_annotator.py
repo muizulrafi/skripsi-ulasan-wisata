@@ -1,14 +1,15 @@
 import pandas as pd
 import random
+import os
 
 # =========================================
 # LOAD DATASET
 # =========================================
 
-df = pd.read_csv(
-    "data/labelling/hasil_labeling.csv",
-    encoding='utf-8-sig'
-)
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+input_path = os.path.join(base_dir, "data", "labelling", "hasil_labeling.csv")
+
+df = pd.read_csv(input_path, encoding='utf-8-sig')
 
 # =========================================
 # PILIH KOLOM
@@ -48,26 +49,16 @@ df.rename(columns={
 # =========================================
 
 def buat_catatan(label):
-
     notes = {
-
         "CONF": "Indikasi konflik sosial atau gangguan wisata",
-
         "GEND": "Indikasi pelecehan",
-
         "ECON": "Indikasi masalah ekonomi dan biaya",
-
         "INFRA": "Indikasi masalah fasilitas dan infrastruktur",
-
         "LAND": "Indikasi akses wisata",
-
         "DIGI": "Indikasi masalah fasilitas digital",
-
         "NEUT": "Ulasan positif atau netral tanpa keluhan sosial-ekonomi",
-
         "IRREL": "Ulasan tidak relevan atau tidak mengandung informasi penting"
     }
-
     return notes.get(label, "")
 
 df['catatan'] = df['label'].apply(buat_catatan)
@@ -89,9 +80,9 @@ df = df[[
 # SIMPAN EXCEL
 # =========================================
 
-df.to_excel(
-    "data/labelling/lembar_kerja_anotator_final.xlsx",
-    index=False
-)
+save_path = os.path.join(base_dir, "data", "labelling", "lembar_kerja_anotator_final.xlsx")
+df.to_excel(save_path, index=False)
 
 print("Lembar kerja anotator final berhasil dibuat!")
+
+

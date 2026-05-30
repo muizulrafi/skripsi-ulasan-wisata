@@ -2,12 +2,10 @@ name: Auto Scraping & Analisis Ulasan
 
 on:
   schedule:
-    # Jalan 2x sehari: jam 06:00 dan 18:00 WIB (UTC+7 = UTC-7jam)
-    # 06:00 WIB = 23:00 UTC (hari sebelumnya)
-    # 18:00 WIB = 11:00 UTC
+    # Jam 06:00 WIB = 23:00 UTC (hari sebelumnya)
+    # Jam 18:00 WIB = 11:00 UTC
     - cron: '0 23 * * *'
     - cron: '0 11 * * *'
-  # Bisa juga dijalankan manual dari GitHub
   workflow_dispatch:
     branches: [master]
 
@@ -17,72 +15,62 @@ jobs:
     timeout-minutes: 120
 
     steps:
-      # 1. Ambil kode dari repo
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2. Setup Python
       - name: Setup Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      # 3. Install dependencies Python
       - name: Install dependencies
         run: |
           pip install --upgrade pip
           pip install pandas playwright nltk sastrawi scikit-learn gensim openpyxl
 
-      # 4. Install Playwright browser (Chromium)
       - name: Install Playwright Chromium
         run: |
           playwright install chromium
           playwright install-deps chromium
 
-      # 5. Download NLTK data
       - name: Download NLTK data
         run: |
           python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
 
-      # 6. Jalankan scraping
-      - name: Scraping ulasan baru
-        run: |
-          python scripts/01_scraping_maps.py
+      - name: 1 - Scraping ulasan baru
+        run: python scripts/01_scraping_maps.py
         continue-on-error: true
 
-      # 7. Preprocessing
-      - name: Preprocessing
-        run: |
-          python scripts/04_preprocessing.py
+      - name: 2 - Auto Labelling
+        run: python scripts/02_labelling.py
         continue-on-error: true
 
-      # 8. SVM
-      - name: Analisis SVM
-        run: |
-          python scripts/06_svm_model.py
+      - name: 3 - Generate Lembar Anotator
+        run: python scripts/03_annotator.py
         continue-on-error: true
 
-      # 9. LDA
-      - name: Analisis LDA
-        run: |
-          python scripts/07_lda_model.py
+      - name: 4 - Preprocessing
+        run: python scripts/04_preprocessing.py
         continue-on-error: true
 
-      # 10. Distribusi Topik
-      - name: Distribusi Topik
-        run: |
-          python scripts/08_distribusi_topik.py
+      - name: 5 - Analisis SVM
+        run: python scripts/06_svm_model.py
         continue-on-error: true
 
-      # 11. Coherence Score
-      - name: Coherence Score
-        run: |
-          python scripts/09_coherence.py
+      - name: 6 - Analisis LDA
+        run: python scripts/07_lda_model.py
         continue-on-error: true
 
-      # 12. Commit & push hasil ke repo
+      - name: 7 - Distribusi Topik
+        run: python scripts/08_distribusi_topik.py
+        continue-on-error: true
+
+      - name: 8 - Coherence Score
+        run: python scripts/09_coherence.py
+        continue-on-error: true
+
       - name: Commit dan push hasil baru
         run: |
           git config --local user.email "action@github.com"
@@ -92,3 +80,5 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+

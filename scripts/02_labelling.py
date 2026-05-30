@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 # =========================================
 # KEYWORD LABEL 
@@ -131,33 +132,26 @@ priority = [
 # =========================================
 
 def auto_label(text):
-
     text = str(text).lower()
-
     found_labels = []
-
     for label, keywords in label_keywords.items():
-
         for word in keywords:
-
             if word in text:
                 found_labels.append(label)
-
-    # PRIORITAS LABEL
     for p in priority:
-
         if p in found_labels:
             return p
-
-    # JIKA TIDAK ADA KEYWORD
     return "IRREL"
 
 # =========================================
 # LOAD DATASET
 # =========================================
 
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+dataset_path = os.path.join(base_dir, "data", "raw", "dataset_final.csv")
+
 df = pd.read_csv(
-    "data/raw/dataset_final.csv",
+    dataset_path,
     sep=',',
     encoding='latin1',
     on_bad_lines='skip'
@@ -168,7 +162,6 @@ df = pd.read_csv(
 # =========================================
 
 df.columns = df.columns.str.strip()
-
 print(df.columns.tolist())
 
 # =========================================
@@ -176,11 +169,8 @@ print(df.columns.tolist())
 # =========================================
 
 df['review'] = df['review'].astype(str)
-
 df['review'] = df['review'].str.replace('\n', ' ', regex=False)
 df['review'] = df['review'].str.replace('\r', ' ', regex=False)
-
-# HAPUS SPASI BERLEBIH
 df['review'] = df['review'].str.strip()
 
 # =========================================
@@ -200,11 +190,8 @@ df['catatan'] = ""
 # SIMPAN HASIL
 # =========================================
 
-df.to_csv(
-    "data/labelling/hasil_labeling.csv",
-    index=False,
-    encoding='utf-8'
-)
+save_path = os.path.join(base_dir, "data", "labelling", "hasil_labeling.csv")
+df.to_csv(save_path, index=False, encoding='utf-8')
 
 # =========================================
 # CEK DISTRIBUSI LABEL
@@ -212,5 +199,4 @@ df.to_csv(
 
 print("\nDistribusi Label:\n")
 print(df['label_auto'].value_counts())
-
 print("\nFile berhasil disimpan: hasil_labeling.csv")
