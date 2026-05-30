@@ -9,6 +9,7 @@ on:
     - cron: '0 11 * * *'
   # Bisa juga dijalankan manual dari GitHub
   workflow_dispatch:
+    branches: [master]
 
 jobs:
   scraping-dan-analisis:
