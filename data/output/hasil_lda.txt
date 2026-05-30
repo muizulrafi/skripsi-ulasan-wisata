@@ -1,0 +1,10 @@
+Topik 1: 0.408*"nan" + 0.033*"masjid" + 0.003*"pesanggrahan" + 0.003*"bantu" + 0.003*"bikin" + 0.003*"indah" + 0.003*"serba" + 0.003*"kasih" + 0.003*"jelang" + 0.002*"bintang"
+
+Topik 2: 0.031*"keluarga" + 0.030*"cocok" + 0.029*"mantap" + 0.019*"libur" + 0.018*"nya" + 0.015*"olahraga" + 0.013*"keren" + 0.010*"enak" + 0.008*"nongkrong" + 0.008*"jalan"
+
+Topik 3: 0.041*"pantai" + 0.031*"ratu" + 0.023*"labuh" + 0.015*"alun" + 0.014*"jalan" + 0.014*"kota" + 0.011*"yg" + 0.010*"sukabumi" + 0.010*"indah" + 0.008*"lokasi"
+
+Topik 4: 0.074*"bagus" + 0.057*"pantai" + 0.030*"bersih" + 0.030*"nya" + 0.027*"indah" + 0.026*"nyaman" + 0.020*"ombak" + 0.018*"yg" + 0.017*"sampah" + 0.017*"pandang"
+
+Topik 5: 0.035*"pantai" + 0.024*"nya" + 0.023*"parkir" + 0.021*"yg" + 0.018*"lumayan" + 0.015*"enak" + 0.015*"jajan" + 0.015*"makan" + 0.014*"luas" + 0.014*"bersih"
+

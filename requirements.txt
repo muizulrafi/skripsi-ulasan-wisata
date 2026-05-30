@@ -1,0 +1,7 @@
+pandas
+playwright
+nltk
+sastrawi
+scikit-learn
+gensim
+openpyxl

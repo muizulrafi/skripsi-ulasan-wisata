@@ -1,0 +1,18 @@
+=== UJI GENERALISASI ===
+
+Accuracy: 87.57%
+
+              precision    recall  f1-score   support
+
+        CONF       0.00      0.00      0.00         6
+        DIGI       0.00      0.00      0.00         1
+        ECON       1.00      0.90      0.94        86
+        GEND       0.00      0.00      0.00         3
+       INFRA       0.99      0.74      0.84       102
+       IRREL       0.81      1.00      0.90       421
+        LAND       0.00      0.00      0.00         5
+        NEUT       0.95      0.77      0.85       237
+
+    accuracy                           0.88       861
+   macro avg       0.47      0.42      0.44       861
+weighted avg       0.88      0.88      0.87       861
